@@ -6,9 +6,13 @@ def get_tieba_hots() -> list[dict]:
     """获取百度贴吧热门话题列表"""
     url = "https://tieba.baidu.com/hottopic/browse/topicList?res_type=0"
     result = []
+    headers = {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0",
+        "X-Requested-With": "fetch"
+    }
     
     try:
-        response = requests.get(url, timeout=5)
+        response = requests.get(url, headers=headers)
         response.raise_for_status()  # 检查HTTP错误
         
         data = response.json()
