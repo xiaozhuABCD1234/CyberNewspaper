@@ -1,58 +1,43 @@
 import aiohttp
 from typing import List, Dict, Optional
+from utils.base_hot_list import BaseHotList
 
 
-async def fetch_bilibili_data(url: str) -> Optional[dict]:
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-    }
+class BilibiliHotList(BaseHotList):
+    def __init__(self):
+        super().__init__(
+            url="https://api.bilibili.com/x/web-interface/ranking/v2?type=all"
+        )
 
-    try:
-        async with aiohttp.ClientSession(
-            timeout=aiohttp.ClientTimeout(total=10)
-        ) as session:
-            async with session.get(url, headers=headers) as response:
-                response.raise_for_status()
-                return await response.json()
+    def _parse_data(self, data: dict) -> List[Dict]:
+        if data.get("code") != 0:
+            return []  # API 返回错误时返回空列表
+        hotlist = data.get("data", {}).get("list", [])
+        result = []
+        for item in hotlist:
+            result.append(
+                {
+                    "title": item.get("title"),
+                    "heat": item.get("stat", {}).get("view", 0),
+                    "url": f"https://www.bilibili.com/video/{item.get('bvid', '')}",
+                    "description": item.get("desc"),
+                    "author": item.get("owner", {}).get("name", "未知UP主"),
+                    "image": item.get("pic", ""),
+                }
+            )
+        return result
 
-    except aiohttp.ClientError as e:
-        print(f"网络请求失败: {str(e)}")
-    except Exception as e:
-        print(f"发生未知错误: {str(e)}")
-    return None
+    async def get_bilibili_ranking(self) -> Optional[List[Dict]]:
+        """获取排名数据（与 get_hot_list() 功能相同）"""
+        data = await self._fetch_data()  # 使用初始化的 URL（排名接口）
+        if data is None:
+            return None
+        return self._parse_data(data)  # 直接传入整个 data
 
-
-def process_video_data(video: dict) -> Dict:
-    return {
-        "title": video.get("title", "无标题"),
-        "url": f"https://www.bilibili.com/video/{video.get('bvid', '')}",
-        "heat": video.get("stat", {}).get("view", 0),
-        # "danmaku": video.get("stat", {}).get("danmaku", 0),
-        # "like": video.get("stat", {}).get("like", 0),
-        "description": video.get("desc"),
-        "author": video.get("owner", {}).get("name", "未知UP主"),
-        # "bvid": video.get("bvid", ""),
-        "image": video.get("pic", ""),
-    }
-
-
-async def get_bilibili_ranking() -> Optional[List[Dict]]:
-    url = "https://api.bilibili.com/x/web-interface/ranking/v2?type=all"
-    data = await fetch_bilibili_data(url)
-
-    if data and data.get("code") == 0:
-        return [process_video_data(v) for v in data.get("data", {}).get("list", [])]
-
-    print(f"排行榜数据获取失败: {data.get('message', '未知错误')}" if data else "")
-    return None
-
-
-async def get_bilibili_popular() -> Optional[List[Dict]]:
-    url = "https://api.bilibili.com/x/web-interface/popular"
-    data = await fetch_bilibili_data(url)
-
-    if data and data.get("code") == 0:
-        return [process_video_data(v) for v in data.get("data", {}).get("list", [])]
-
-    print(f"热门数据获取失败: {data.get('message', '未知错误')}" if data else "")
-    return None
+    async def get_bilibili_popular(self) -> Optional[List[Dict]]:
+        """获取热门数据（使用不同的 URL）"""
+        url = "https://api.bilibili.com/x/web-interface/popular"
+        data = await self._fetch_data(url=url)  # 传入热门接口的 URL
+        if data is None:
+            return None
+        return self._parse_data(data)  # 直接传入整个 data

@@ -12,9 +12,11 @@ class BaseHotList:
         self.url = url
         self.session = aiohttp.ClientSession(headers=self.BASE_HEADERS)
 
-    async def _fetch_data(self) -> dict[str, any]:
+    async def _fetch_data(self, url=None) -> dict:
+        if url is None:
+            url = self.url  # 默认使用实例的 url 属性
         try:
-            async with self.session.get(self.url) as response:
+            async with self.session.get(url) as response:
                 response.raise_for_status()
                 return await response.json()
         except Exception as e:

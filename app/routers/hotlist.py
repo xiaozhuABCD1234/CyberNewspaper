@@ -4,7 +4,7 @@ from models.schemas import HotItem
 from services.crawlers.bing import get_bing_hotlist
 from services.crawlers.zhihu import ZhihuHotList
 from services.crawlers.tieba import TiebaHotList
-from services.crawlers.bilibili import get_bilibili_popular, get_bilibili_ranking
+from services.crawlers.bilibili import BilibiliHotList
 from services.crawlers.weibo import WeiboHotList
 
 router = APIRouter()
@@ -37,10 +37,15 @@ async def get_hotlist():
 
 @router.get("/api/hotlist/bilibili", response_model=list[HotItem])
 async def get_hotlist(choice: str = "ranking"):
-    if choice == "popular":
-        return await get_bilibili_popular()
-    else:
-        return await get_bilibili_ranking()
+    bilibili = BilibiliHotList()
+    try:
+        if choice == "popular":
+            data = await bilibili.get_bilibili_popular()
+        else:
+            data = await bilibili.get_bilibili_ranking()
+        return data
+    finally:
+        await bilibili.close()
 
 
 @router.get("/api/hotlist/weibo", response_model=list[HotItem])
