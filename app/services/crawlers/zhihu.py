@@ -20,14 +20,12 @@ async def get_zhihu_hotlist() -> list[dict]:
                 for item in hotlist:
                     target = item.get("target", {})
                     children = item.get("children", [])
-                    thumbnail = (
-                        children[0].get("thumbnail", "") if children else ""
-                    )  # 提取封面图片
+                    thumbnail = children[0].get("thumbnail") if children else None
 
                     result.append(
                         {
                             "title": target.get("title"),
-                            # "heat": item.get("detail_text"),
+                            "heat": item.get("detail_text"),
                             "url": f"https://www.zhihu.com/question/{target.get('id')}",  # 拼接实际访问URL
                             # "answer_count": target.get("answer_count"),
                             "image": thumbnail,  # 添加封面图片
@@ -38,12 +36,3 @@ async def get_zhihu_hotlist() -> list[dict]:
         except Exception as e:
             print(f"请求失败: {e}")
             return []
-
-# 调用示例
-if __name__ == "__main__":
-    hotlist = asyncio.run(get_zhihu_hotlist())
-    for idx, item in enumerate(hotlist, 1):
-        print(f"{idx}. {item['title']} | 热度：{item['heat']}")
-        print(f"链接: {item['url']}")
-        print(f"封面图片: {item['thumbnail']}")
-        print("-" * 40)

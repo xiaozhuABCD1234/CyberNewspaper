@@ -2,6 +2,7 @@ from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
 import asyncio
 
+
 async def get_bing_hotlist() -> list[dict]:
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)  # 打开浏览器
@@ -30,8 +31,8 @@ async def get_bing_hotlist() -> list[dict]:
             for item in hotlist_items:
                 title = item.select_one(".tobitem_title").text.strip()  # 提取标题
                 url = f"https://cn.bing.com/search?q={title}"  # 构造搜索链接
-                img_url = item.find("img")["src"] if item.find("img") else "No Image"
-                result.append({"title": title, "url": url, "img_url": img_url})
+                image = item.find("img")["src"] if item.find("img") else "No Image"
+                result.append({"title": title, "url": url, "img_url": image})
             return result
         else:
             return None

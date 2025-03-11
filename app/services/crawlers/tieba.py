@@ -1,5 +1,6 @@
 import json
 import requests
+import aiohttp
 from urllib.parse import unquote
 
 
@@ -25,12 +26,11 @@ def get_tieba_hotslist() -> list[dict]:
         for topic in hot_topics:
             result.append(
                 {
-                    "topic_name": topic.get("topic_name", ""),
-                    "topic_desc": topic.get("topic_desc", ""),
-                    "discuss_num": topic.get("discuss_num", 0),
-                    "topic_pic": topic.get("topic_pic", ""),
-                    # "original_url": topic.get("topic_url", ""),
-                    "decoded_url": unquote(topic.get("topic_url", "")),
+                    "title": topic.get("topic_name", ""),
+                    "url": unquote(topic.get("topic_url", "")),
+                    "heat": str(topic.get("discuss_num", 0)),
+                    "description": topic.get("topic_desc", ""),
+                    "image": topic.get("topic_pic", None),
                 }
             )
 
