@@ -6,6 +6,9 @@ from services.crawlers.zhihu import ZhihuHotList
 from services.crawlers.tieba import TiebaHotList
 from services.crawlers.bilibili import BilibiliHotList
 from services.crawlers.weibo import WeiboHotList
+from services.crawlers.baidu import BaiduHotList
+
+from services.crawlers.codelife import CodeLifeHotList
 
 router = APIRouter()
 
@@ -56,3 +59,25 @@ async def get_hotlist():
         return data
     finally:
         await weibo.close()
+
+
+@router.get("/api/hotlist/baidu", response_model=list[HotItem])
+async def get_hotlist():
+    baidu = BaiduHotList()
+    try:
+        data = await baidu.get_hot_list()
+        return data
+    finally:
+        await baidu.close()
+
+
+@router.get("/api/hotlist/douyin", response_model=list[HotItem])
+async def get_hotlist():
+    douyin = CodeLifeHotList(
+        "https://api.codelife.cc/api/top/list?lang=cn&id=DpQvNABoNE"
+    )
+    try:
+        data = await douyin.get_hot_list()
+        return data
+    finally:
+        await douyin.close()

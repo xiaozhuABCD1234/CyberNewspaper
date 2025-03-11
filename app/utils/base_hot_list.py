@@ -8,7 +8,7 @@ class BaseHotList:
         "X-Requested-With": "fetch",
     }
 
-    def __init__(self, url, **kwargs):
+    def __init__(self, url: str):
         self.url = url
         self.session = aiohttp.ClientSession(headers=self.BASE_HEADERS)
 

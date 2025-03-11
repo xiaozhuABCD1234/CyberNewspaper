@@ -12,8 +12,8 @@ def convert_to_number(text: str) -> int:
     number_part = parts[0]
     unit_part = parts[1]
     if unit_part == "万热度":
-        return int(number_part) * 10000
+        return int(float(number_part) * 10000)
     elif unit_part == "亿热度":
-        return int(number_part) * 100000000
+        return int(float(number_part) * 100000000)
     else:
         return int(number_part)
