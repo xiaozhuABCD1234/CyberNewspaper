@@ -6,5 +6,8 @@
 4. 抖音：[api](https://api.codelife.cc/api/top/list?lang=cn&id=DpQvNABoNE)
 5. 微博: [api](https://weibo.com/ajax/side/hotSearch)
 6. 必应：自动爬取
-7. 百度：[api](https://top.baidu.com/api/board?tab=realtime) 今日头条 澎湃新闻 微博
-快手 抖音
+7. 百度：[api](https://top.baidu.com/api/board?tab=realtime)
+8. 今日头条
+9. 澎湃新闻
+10. 快手
+11. 微信 [api](https://api.codelife.cc/api/top/list?lang=cn&id=WnBe01o371)
