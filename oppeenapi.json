@@ -1,0 +1,489 @@
+{
+	"openapi": "3.1.0",
+	"info": { "title": "FastAPI", "version": "0.1.0" },
+	"paths": {
+		"/api/hotlist/bing": {
+			"get": {
+				"summary": "获取 Bing 实时搜索热门列表",
+				"description": "从 Bing 搜索引擎获取当前实时热门搜索关键词列表，返回包含标题、链接和热度的热门条目。",
+				"operationId": "get_hotlist_api_hotlist_bing_get",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": { "$ref": "#/components/schemas/HotItem" },
+									"type": "array",
+									"title": "Response Get Hotlist Api Hotlist Bing Get"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/hotlist/zhihu": {
+			"get": {
+				"summary": "获取知乎实时热门话题列表",
+				"description": "从知乎热榜获取当前实时热门话题列表，返回包含标题、链接、热度和讨论量的热门条目。",
+				"operationId": "get_hotlist_api_hotlist_zhihu_get",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": { "$ref": "#/components/schemas/HotItem" },
+									"type": "array",
+									"title": "Response Get Hotlist Api Hotlist Zhihu Get"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/hotlist/tieba": {
+			"get": {
+				"summary": "获取百度贴吧实时热门帖子列表",
+				"description": "从百度贴吧获取当前实时热门帖子列表，返回包含标题、链接、回复数和热度的热门条目。",
+				"operationId": "get_hotlist_api_hotlist_tieba_get",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": { "$ref": "#/components/schemas/HotItem" },
+									"type": "array",
+									"title": "Response Get Hotlist Api Hotlist Tieba Get"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/hotlist/bilibili": {
+			"get": {
+				"summary": "获取 B 站热门视频列表",
+				"description": "从 B 站获取热门视频列表，可通过 `choice` 参数选择返回类型：`ranking`（默认，热门排行榜）或 `popular`（实时热门推荐视频）。返回包含标题、链接、播放量和热度的热门条目。",
+				"operationId": "get_hotlist_api_hotlist_bilibili_get",
+				"parameters": [
+					{
+						"name": "choice",
+						"in": "query",
+						"required": false,
+						"schema": {
+							"type": "string",
+							"default": "ranking",
+							"title": "Choice"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": { "$ref": "#/components/schemas/HotItem" },
+									"title": "Response Get Hotlist Api Hotlist Bilibili Get"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Error",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/hotlist/weibo": {
+			"get": {
+				"summary": "获取微博实时热门话题列表",
+				"description": "从微博热榜获取当前实时热门话题列表，返回包含标题、链接和热度的热门条目。",
+				"operationId": "get_hotlist_api_hotlist_weibo_get",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": { "$ref": "#/components/schemas/HotItem" },
+									"type": "array",
+									"title": "Response Get Hotlist Api Hotlist Weibo Get"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/hotlist/baidu": {
+			"get": {
+				"summary": "获取百度实时热门搜索列表",
+				"description": "从百度搜索获取当前实时热门搜索关键词列表，返回包含标题、链接和热度的热门条目。",
+				"operationId": "get_hotlist_api_hotlist_baidu_get",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": { "$ref": "#/components/schemas/HotItem" },
+									"type": "array",
+									"title": "Response Get Hotlist Api Hotlist Baidu Get"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/hotlist/douyin": {
+			"get": {
+				"summary": "获取抖音实时热门话题列表",
+				"description": "从抖音热榜获取当前实时热门话题列表，返回包含标题、链接和热度的热门条目。",
+				"operationId": "get_hotlist_api_hotlist_douyin_get",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": { "$ref": "#/components/schemas/HotItem" },
+									"type": "array",
+									"title": "Response Get Hotlist Api Hotlist Douyin Get"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/hotlist/toutiao": {
+			"get": {
+				"summary": "获取头条实时热门话题列表",
+				"description": "从头条热榜获取当前实时热门话题列表，返回包含标题、链接和热度的热门条目。",
+				"operationId": "get_hotlist_api_hotlist_toutiao_get",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": { "$ref": "#/components/schemas/HotItem" },
+									"type": "array",
+									"title": "Response Get Hotlist Api Hotlist Toutiao Get"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/hotlist/weixin": {
+			"get": {
+				"summary": "获取微信实时热门文章列表",
+				"description": "从微信热文获取当前实时热门文章列表，返回包含标题、链接和热度的热门条目。",
+				"operationId": "get_hotlist_api_hotlist_weixin_get",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": { "$ref": "#/components/schemas/HotItem" },
+									"type": "array",
+									"title": "Response Get Hotlist Api Hotlist Weixin Get"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/hotlist/36kr": {
+			"get": {
+				"summary": "获取 36 氪实时热门文章列表",
+				"description": "从 36 氪获取当前实时热门文章列表，返回包含标题、链接和热度的热门条目。",
+				"operationId": "get_hotlist_api_hotlist_36kr_get",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": { "$ref": "#/components/schemas/HotItem" },
+									"type": "array",
+									"title": "Response Get Hotlist Api Hotlist 36Kr Get"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/hotlist/sspai": {
+			"get": {
+				"summary": "获取少数派实时热门文章列表",
+				"description": "从少数派获取当前实时热门文章列表，返回包含标题、链接和热度的热门条目。",
+				"operationId": "get_hotlist_api_hotlist_sspai_get",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": { "$ref": "#/components/schemas/HotItem" },
+									"type": "array",
+									"title": "Response Get Hotlist Api Hotlist Sspai Get"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/hotlist/huxiu": {
+			"get": {
+				"summary": "获取虎嗅实时热门文章列表",
+				"description": "从虎嗅获取当前实时热门文章列表，返回包含标题、链接和热度的热门条目。",
+				"operationId": "get_hotlist_api_hotlist_huxiu_get",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": { "$ref": "#/components/schemas/HotItem" },
+									"type": "array",
+									"title": "Response Get Hotlist Api Hotlist Huxiu Get"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/hotlist/ithome": {
+			"get": {
+				"summary": "获取 IT 之家实时热门新闻列表",
+				"description": "从 IT 之家获取当前实时热门新闻列表，返回包含标题、链接和热度的热门条目。",
+				"operationId": "get_hotlist_api_hotlist_ithome_get",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": { "$ref": "#/components/schemas/HotItem" },
+									"type": "array",
+									"title": "Response Get Hotlist Api Hotlist Ithome Get"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/hotlist/52pojie": {
+			"get": {
+				"summary": "获取吾爱破解实时热门资源列表",
+				"description": "从吾爱破解获取当前实时热门资源列表，返回包含标题、链接和热度的热门条目。",
+				"operationId": "get_hotlist_api_hotlist_52pojie_get",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": { "$ref": "#/components/schemas/HotItem" },
+									"type": "array",
+									"title": "Response Get Hotlist Api Hotlist 52Pojie Get"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/hotlist/hupu": {
+			"get": {
+				"summary": "获取虎扑实时热门帖子列表",
+				"description": "从虎扑社区获取当前实时热门帖子列表，返回包含标题、链接和热度的热门条目。",
+				"operationId": "get_hotlist_api_hotlist_hupu_get",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": { "$ref": "#/components/schemas/HotItem" },
+									"type": "array",
+									"title": "Response Get Hotlist Api Hotlist Hupu Get"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/hotlist/newqq": {
+			"get": {
+				"summary": "获取腾讯新闻实时热门话题列表",
+				"description": "从腾讯新闻获取当前实时热门话题列表，返回包含标题、链接和热度的热门条目。",
+				"operationId": "get_hotlist_api_hotlist_newqq_get",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": { "$ref": "#/components/schemas/HotItem" },
+									"type": "array",
+									"title": "Response Get Hotlist Api Hotlist Newqq Get"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/hotlist/taobao": {
+			"get": {
+				"summary": "获取淘宝实时热门商品列表",
+				"description": "从淘宝获取当前实时热门商品列表，返回包含标题、链接和热度的热门条目。",
+				"operationId": "get_hotlist_api_hotlist_taobao_get",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": { "$ref": "#/components/schemas/HotItem" },
+									"type": "array",
+									"title": "Response Get Hotlist Api Hotlist Taobao Get"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/hotlist/juejin": {
+			"get": {
+				"summary": "获取掘金实时热门文章列表",
+				"description": "从掘金获取当前实时热门文章列表，返回包含标题、链接和热度的热门条目。",
+				"operationId": "get_hotlist_api_hotlist_juejin_get",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": { "$ref": "#/components/schemas/HotItem" },
+									"type": "array",
+									"title": "Response Get Hotlist Api Hotlist Juejin Get"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/": {
+			"get": {
+				"summary": "Read Root",
+				"operationId": "read_root__get",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": { "application/json": { "schema": {} } }
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"HTTPValidationError": {
+				"properties": {
+					"detail": {
+						"items": { "$ref": "#/components/schemas/ValidationError" },
+						"type": "array",
+						"title": "Detail"
+					}
+				},
+				"type": "object",
+				"title": "HTTPValidationError"
+			},
+			"HotItem": {
+				"properties": {
+					"title": { "type": "string", "title": "Title" },
+					"url": {
+						"type": "string",
+						"maxLength": 2083,
+						"minLength": 1,
+						"format": "uri",
+						"title": "Url"
+					},
+					"heat": {
+						"anyOf": [
+							{ "type": "string" },
+							{ "type": "integer" },
+							{ "type": "null" }
+						],
+						"title": "Heat"
+					},
+					"description": {
+						"anyOf": [{ "type": "string" }, { "type": "null" }],
+						"title": "Description"
+					},
+					"image": {
+						"anyOf": [
+							{
+								"type": "string",
+								"maxLength": 2083,
+								"minLength": 1,
+								"format": "uri"
+							},
+							{ "type": "string" },
+							{ "type": "null" }
+						],
+						"title": "Image"
+					},
+					"author": {
+						"anyOf": [{ "type": "string" }, { "type": "null" }],
+						"title": "Author"
+					}
+				},
+				"type": "object",
+				"required": ["title", "url"],
+				"title": "HotItem"
+			},
+			"ValidationError": {
+				"properties": {
+					"loc": {
+						"items": { "anyOf": [{ "type": "string" }, { "type": "integer" }] },
+						"type": "array",
+						"title": "Location"
+					},
+					"msg": { "type": "string", "title": "Message" },
+					"type": { "type": "string", "title": "Error Type" }
+				},
+				"type": "object",
+				"required": ["loc", "msg", "type"],
+				"title": "ValidationError"
+			}
+		}
+	}
+}
