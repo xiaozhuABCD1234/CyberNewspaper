@@ -1,0 +1,7 @@
+database:
+  type: sqlite3
+  url: "sqlite://db.sqlite3"
+
+settings:
+  interval_time_hours: 1
+  
