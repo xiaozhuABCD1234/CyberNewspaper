@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from models.schemas import HotItem
+from models.schemas import HotItemShow
 from services.crawlers.bing import get_bing_hotlist
 from services.crawlers.zhihu import ZhihuHotList
 from services.crawlers.tieba import TiebaHotList
@@ -15,7 +15,7 @@ router = APIRouter()
 
 @router.get(
     "/api/hotlist/latest/bing",
-    response_model=list[HotItem],
+    response_model=list[HotItemShow],
     summary="获取 Bing 实时搜索热门列表",
     description="从 Bing 搜索引擎获取当前实时热门搜索关键词列表，返回包含标题、链接和热度的热门条目。",
 )
@@ -25,7 +25,7 @@ async def get_hotlist():
 
 @router.get(
     "/api/hotlist/latest/zhihu",
-    response_model=list[HotItem],
+    response_model=list[HotItemShow],
     summary="获取知乎实时热门话题列表",
     description="从知乎热榜获取当前实时热门话题列表，返回包含标题、链接、热度和讨论量的热门条目。",
 )
@@ -40,7 +40,7 @@ async def get_hotlist():
 
 @router.get(
     "/api/hotlist/latest/tieba",
-    response_model=list[HotItem],
+    response_model=list[HotItemShow],
     summary="获取百度贴吧实时热门帖子列表",
     description="从百度贴吧获取当前实时热门帖子列表，返回包含标题、链接、回复数和热度的热门条目。",
 )
@@ -55,7 +55,7 @@ async def get_hotlist():
 
 @router.get(
     "/api/hotlist/latest/bilibili",
-    response_model=list[HotItem],
+    response_model=list[HotItemShow],
     summary="获取 B 站热门视频列表",
     description="从 B 站获取热门视频列表，可通过 `choice` 参数选择返回类型：`ranking`（默认，热门排行榜）或 `popular`（实时热门推荐视频）。返回包含标题、链接、播放量和热度的热门条目。",
 )
@@ -73,7 +73,7 @@ async def get_hotlist(choice: str = "ranking"):
 
 @router.get(
     "/api/hotlist/latest/weibo",
-    response_model=list[HotItem],
+    response_model=list[HotItemShow],
     summary="获取微博实时热门话题列表",
     description="从微博热榜获取当前实时热门话题列表，返回包含标题、链接和热度的热门条目。",
 )
@@ -88,7 +88,7 @@ async def get_hotlist():
 
 @router.get(
     "/api/hotlist/latest/baidu",
-    response_model=list[HotItem],
+    response_model=list[HotItemShow],
     summary="获取百度实时热门搜索列表",
     description="从百度搜索获取当前实时热门搜索关键词列表，返回包含标题、链接和热度的热门条目。",
 )
@@ -103,7 +103,7 @@ async def get_hotlist():
 
 @router.get(
     "/api/hotlist/latest/douyin",
-    response_model=list[HotItem],
+    response_model=list[HotItemShow],
     summary="获取抖音实时热门话题列表",
     description="从抖音热榜获取当前实时热门话题列表，返回包含标题、链接和热度的热门条目。",
 )
@@ -120,7 +120,7 @@ async def get_hotlist():
 
 @router.get(
     "/api/hotlist/latest/toutiao",
-    response_model=list[HotItem],
+    response_model=list[HotItemShow],
     summary="获取头条实时热门话题列表",
     description="从头条热榜获取当前实时热门话题列表，返回包含标题、链接和热度的热门条目。",
 )
@@ -135,7 +135,7 @@ async def get_hotlist():
 
 @router.get(
     "/api/hotlist/latest/weixin",
-    response_model=list[HotItem],
+    response_model=list[HotItemShow],
     summary="获取微信实时热门文章列表",
     description="从微信热文获取当前实时热门文章列表，返回包含标题、链接和热度的热门条目。",
 )
@@ -152,7 +152,7 @@ async def get_hotlist():
 
 @router.get(
     "/api/hotlist/latest/36kr",
-    response_model=list[HotItem],
+    response_model=list[HotItemShow],
     summary="获取 36 氪实时热门文章列表",
     description="从 36 氪获取当前实时热门文章列表，返回包含标题、链接和热度的热门条目。",
 )
@@ -167,7 +167,7 @@ async def get_hotlist():
 
 @router.get(
     "/api/hotlist/latest/sspai",
-    response_model=list[HotItem],
+    response_model=list[HotItemShow],
     summary="获取少数派实时热门文章列表",
     description="从少数派获取当前实时热门文章列表，返回包含标题、链接和热度的热门条目。",
 )
@@ -184,7 +184,7 @@ async def get_hotlist():
 
 @router.get(
     "/api/hotlist/latest/huxiu",
-    response_model=list[HotItem],
+    response_model=list[HotItemShow],
     summary="获取虎嗅实时热门文章列表",
     description="从虎嗅获取当前实时热门文章列表，返回包含标题、链接和热度的热门条目。",
 )
@@ -201,7 +201,7 @@ async def get_hotlist():
 
 @router.get(
     "/api/hotlist/latest/ithome",
-    response_model=list[HotItem],
+    response_model=list[HotItemShow],
     summary="获取 IT 之家实时热门新闻列表",
     description="从 IT 之家获取当前实时热门新闻列表，返回包含标题、链接和热度的热门条目。",
 )
@@ -218,7 +218,7 @@ async def get_hotlist():
 
 @router.get(
     "/api/hotlist/latest/52pojie",
-    response_model=list[HotItem],
+    response_model=list[HotItemShow],
     summary="获取吾爱破解实时热门资源列表",
     description="从吾爱破解获取当前实时热门资源列表，返回包含标题、链接和热度的热门条目。",
 )
@@ -235,7 +235,7 @@ async def get_hotlist():
 
 @router.get(
     "/api/hotlist/latest/hupu",
-    response_model=list[HotItem],
+    response_model=list[HotItemShow],
     summary="获取虎扑实时热门帖子列表",
     description="从虎扑社区获取当前实时热门帖子列表，返回包含标题、链接和热度的热门条目。",
 )
@@ -250,7 +250,7 @@ async def get_hotlist():
 
 @router.get(
     "/api/hotlist/latest/newqq",
-    response_model=list[HotItem],
+    response_model=list[HotItemShow],
     summary="获取腾讯新闻实时热门话题列表",
     description="从腾讯新闻获取当前实时热门话题列表，返回包含标题、链接和热度的热门条目。",
 )
@@ -267,7 +267,7 @@ async def get_hotlist():
 
 @router.get(
     "/api/hotlist/latest/taobao",
-    response_model=list[HotItem],
+    response_model=list[HotItemShow],
     summary="获取淘宝实时热门商品列表",
     description="从淘宝获取当前实时热门商品列表，返回包含标题、链接和热度的热门条目。",
 )
@@ -284,7 +284,7 @@ async def get_hotlist():
 
 @router.get(
     "/api/hotlist/latest/juejin",
-    response_model=list[HotItem],
+    response_model=list[HotItemShow],
     summary="获取掘金实时热门文章列表",
     description="从掘金获取当前实时热门文章列表，返回包含标题、链接和热度的热门条目。",
 )
